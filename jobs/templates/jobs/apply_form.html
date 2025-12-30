@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply | {{ job.title }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f4f7f6; }
+        .app-card { border: none; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .btn-success { background-color: #00875a; border: none; }
+    </style>
+</head>
+<body>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-decoration-none">Home</a></li>
+                    <li class="breadcrumb-item active">Application Form</li>
+                </ol>
+            </nav>
+
+            <div class="card app-card shadow-sm">
+                <div class="card-body p-4 p-md-5">
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="bg-primary text-white rounded p-3 me-3">💼</div>
+                        <div>
+                            <h2 class="h4 mb-1">Applying for {{ job.title }}</h2>
+                            <p class="text-muted mb-0">{{ job.location }} • Posted by {{ job.employer.username }}</p>
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="mb-4">
+    <label class="form-label fw-bold">Contact Phone Number</label>
+    <div class="input-group">
+        <span class="input-group-text bg-light">📞</span>
+        <input type="text" name="phone_number" class="form-control" placeholder="e.g. +91 9876543210" required>
+    </div>
+    <small class="text-muted">Recruiters will use this to call you for interviews.</small>
+</div>
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Resume Link (Cloud Storage URL)</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light">https://</span>
+                                <input type="url" name="resume_link" class="form-control" placeholder="drive.google.com/your-resume" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Cover Letter / Introduction</label>
+                            <textarea name="cover_letter" class="form-control" rows="5" placeholder="Tell the employer why you are a great fit for this role..."></textarea>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success btn-lg">Submit My Application</button>
+                            <a href="{% url 'home' %}" class="btn btn-outline-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

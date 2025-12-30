@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Applications</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f4f7f6; }
+        .app-card { border: none; border-radius: 12px; transition: transform 0.2s; }
+        .app-card:hover { transform: translateY(-5px); }
+    </style>
+</head>
+<body>
+
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="fw-bold">My Job Applications</h1>
+        <a href="{% url 'home' %}" class="btn btn-outline-primary">← Back to Job List</a>
+    </div>
+
+    <div class="row">
+        {% for app in applications %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card app-card shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="card-title text-primary fw-bold mb-0">{{ app.job.title }}</h5>
+                        <span class="badge bg-success small">Submitted</span>
+                    </div>
+                    <p class="text-muted small mb-3">Applied on: {{ app.applied_at|date:"M d, Y" }}</p>
+                    
+                    <hr>
+
+                    <div class="mb-3">
+                        <p class="mb-1 small text-dark"><strong>📞 My Contact:</strong> {{ app.phone_number }}</p>
+                        <p class="mb-1 small text-dark mt-2"><strong>📄 Cover Letter Preview:</strong></p>
+                        <p class="text-secondary small fst-italic p-2 bg-light rounded">
+                            "{{ app.cover_letter|truncatechars:100 }}"
+                        </p>
+                    </div>
+
+                    <div class="d-grid mt-auto">
+                       <a href="{{ app.resume_link }}" target="_blank" class="btn btn-primary w-100 py-2 fw-bold">
+    View Submitted Resume 🔗
+</a>
+
+<div class="mt-3 text-center">
+    <form action="{% url 'withdraw_application' app.id %}" method="GET">
+        <button type="submit" class="btn btn-link text-danger text-decoration-none fw-bold small">
+            🗑 Withdraw Application
+        </button>
+    </form>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center py-5">
+            <div class="alert alert-info shadow-sm">
+                You haven't applied for any jobs yet. Start exploring now!
+            </div>
+            <a href="{% url 'home' %}" class="btn btn-primary">Browse Jobs</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+</body>
+</html>

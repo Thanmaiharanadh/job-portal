@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Post a New Job</title>
+</head>
+<body>
+    <h1>Create a New Job Listing</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Post Job</button>
+    </form>
+    <br>
+    <a href="{% url 'home' %}">Cancel and go back</a>
+</body>
+</html>
