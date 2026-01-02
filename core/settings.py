@@ -120,3 +120,4 @@ LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 import os
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+CSRF_TRUSTED_ORIGINS = ['https://job-portal-haranadh.up.railway.app']
